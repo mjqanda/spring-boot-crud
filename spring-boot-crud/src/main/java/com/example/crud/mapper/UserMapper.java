@@ -8,7 +8,7 @@ import com.example.crud.model.User;
 @Mapper
 public interface UserMapper {
 
-    @Select("SELECT EXISTS (SELECT 1 FROM USER_TABLE WHERE username = #{userName} and password = #{password})")
+    @Select("SELECT EXISTS (SELECT 1 FROM USER_TABLE WHERE username = #{username} and password = #{password})")
     boolean isUserExists(User user);
 
 }

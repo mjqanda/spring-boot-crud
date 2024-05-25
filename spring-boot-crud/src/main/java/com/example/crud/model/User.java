@@ -1,17 +1,17 @@
 package com.example.crud.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class User {
 
-    public User(String userName, String password) {
-        this.userName  = userName;
-        this.password = password;
-    }
+    @JsonProperty("username")
+    private final String username;
 
-    private Long id;
-    private String userName;
-    private String password;
+    @JsonProperty("password")
+    private final String password;
 
 }

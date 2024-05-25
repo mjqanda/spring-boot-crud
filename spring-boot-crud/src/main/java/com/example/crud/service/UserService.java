@@ -1,6 +1,5 @@
 package com.example.crud.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,8 +10,11 @@ import com.example.crud.model.User;
 @Transactional
 public class UserService {
 
-    @Autowired
-    UserMapper userMapper;
+    private final UserMapper userMapper;
+
+    public UserService(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     public boolean isUserExists(User user) {
         return userMapper.isUserExists(user);

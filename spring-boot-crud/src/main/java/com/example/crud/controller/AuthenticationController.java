@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.config.JwtTokenProvider;
-import com.example.crud.model.AuthenticationRequest;
 import com.example.crud.model.User;
 import com.example.crud.service.UserService;
 
@@ -21,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthenticationController {
 
     private final JwtTokenProvider jwtTokenProvider;
-
     private final UserService userService;
 
     public AuthenticationController(JwtTokenProvider jwtTokenProvider, UserService userService) {
@@ -30,28 +28,28 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Map<String, Object>> signin(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity<Map<String, Object>> signin(@RequestBody User data) {
         Map<String, Object> model = new HashMap<>();
         try {
             log.info("signin start:: " + data.getUsername());
 
-            // boolean isUserValid = userService.isUserExists(new User(data.getUsername(),
-            // data.getPassword()));
+            boolean isUserValid = userService.isUserExists(new User(data.getUsername(),
+                    data.getPassword()));
 
-            // if (isUserValid) {
-            // Generate JWT token
-            String token = jwtTokenProvider.createToken(data.getUsername());
-            model.put("success", true);
-            model.put("message", "Authentication successful");
-            model.put("token", token);
-            // } else {
-            // model.put("success", false);
-            // model.put("message", "Invalid username or password");
-            // }
+            if (isUserValid) {
+                String token = jwtTokenProvider.createToken(data.getUsername());
+                model.put("success", true);
+                model.put("message", "Authentication successful");
+                model.put("token", token);
+            } else {
+                model.put("success", false);
+                model.put("message", "Invalid username or password");
+            }
         } catch (Exception e) {
             model.put("success", false);
             model.put("message", "An error occurred during authentication");
             log.error("Error during authentication", e);
+            e.printStackTrace();
         }
         return ResponseEntity.ok(model);
     }
