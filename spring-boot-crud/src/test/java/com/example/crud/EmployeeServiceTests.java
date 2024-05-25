@@ -61,7 +61,6 @@ class EmployeeServiceTests {
 
         Employee updatedEmployee = employeeService.getEmployeeById(employee.getId());
         assertEquals(newName, updatedEmployee.getName());
-
     }
 
     @Test

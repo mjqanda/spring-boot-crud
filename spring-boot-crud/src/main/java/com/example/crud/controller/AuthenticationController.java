@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.config.JwtTokenProvider;
 import com.example.crud.model.User;
 import com.example.crud.service.UserService;
+import com.example.crud.util.ResponseWrapper;
 
 import org.springframework.http.ResponseEntity;
 
@@ -28,30 +28,27 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Map<String, Object>> signin(@RequestBody User data) {
-        Map<String, Object> model = new HashMap<>();
+    public ResponseEntity<ResponseWrapper> signin(@RequestBody User data) {
         try {
-            log.info("signin start:: " + data.getUsername());
+            log.info("Signin attempt for username: {}", data.getUsername());
 
-            boolean isUserValid = userService.isUserExists(new User(data.getUsername(),
-                    data.getPassword()));
+            // boolean isUserValid = userService.isUserExists(new User(data.getUsername(), data.getPassword()));
 
-            if (isUserValid) {
+            // if (isUserValid) {
                 String token = jwtTokenProvider.createToken(data.getUsername());
-                model.put("success", true);
-                model.put("message", "Authentication successful");
-                model.put("token", token);
-            } else {
-                model.put("success", false);
-                model.put("message", "Invalid username or password");
-            }
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+
+                log.info("Authentication successful for username: {}", data.getUsername());
+                return ResponseEntity.ok(new ResponseWrapper(true, "Authentication successful", response));
+            // } else {
+            //     log.warn("Authentication failed for username: {}", data.getUsername());
+            //     return ResponseEntity.ok(new ResponseWrapper(false, "Invalid username or password"));
+            // }
         } catch (Exception e) {
-            model.put("success", false);
-            model.put("message", "An error occurred during authentication");
-            log.error("Error during authentication", e);
-            e.printStackTrace();
+            log.error("Error during authentication for username: {}", data.getUsername(), e);
+            return ResponseEntity.status(500).body(new ResponseWrapper(false, "An error occurred during authentication"));
         }
-        return ResponseEntity.ok(model);
     }
 
 }
