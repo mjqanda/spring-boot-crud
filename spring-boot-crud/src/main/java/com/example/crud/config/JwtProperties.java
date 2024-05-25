@@ -1,6 +1,5 @@
 package com.example.crud.config;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -16,7 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 @ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 
+    // private String secretKey = "rzxlszyykpbgqcflzxsqcysyhljt";
     private String secretKey = "!@#$%^&*com.example.crud!@#$%^&*";
+
+    // validity in milliseconds
+    // 10 years
+    // private long validityInMs = 315569260000L;
 
     public JwtProperties(String secretKey) {
         this.secretKey = secretKey;
@@ -34,17 +38,16 @@ public class JwtProperties {
     }
 
     public long getValidityInMs() {
-        ZonedDateTime nowAsiaSingapore = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
-        ZonedDateTime expiryDateTime = nowAsiaSingapore.with(LocalTime.MAX);
 
-        // Log current time and expiry time
-        log.info("Current time in Asia/Singapore: {}", nowAsiaSingapore);
-        log.info("Token expiry time in Asia/Singapore: {}", expiryDateTime);
-
-        // Calculate duration until expiry in milliseconds
-        Duration validityDuration = Duration.between(nowAsiaSingapore, expiryDateTime);
-
-        return validityDuration.toMillis();
+        Instant nowUtc = Instant.now();
+        ZoneId asiaSingapore = ZoneId.of("Asia/Singapore");
+        ZonedDateTime nowAsiaSingapore = ZonedDateTime.ofInstant(nowUtc, asiaSingapore);
+        ZonedDateTime expiryDateTime = nowAsiaSingapore.with(LocalTime.of(23, 59));
+        log.info("getValidityInMs - nowAsiaSingapore -> "+nowAsiaSingapore);
+        log.info("getValidityInMs - expiryDateTime -> "+expiryDateTime);
+        long validityInMs = expiryDateTime.toInstant().toEpochMilli();
+        // System.out.println("test time in millis:: " + validityInMs);
+        return validityInMs;
     }
 
 }
