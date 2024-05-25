@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.crud.config.JwtTokenProvider;
-import com.example.crud.model.AuthenticationRequest;
 import com.example.crud.model.User;
 import com.example.crud.service.UserService;
 
@@ -30,17 +28,17 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<Map<String, Object>> signin(@RequestBody AuthenticationRequest data) {
+    public ResponseEntity<Map<String, Object>> signin(@RequestBody User data) {
         Map<String, Object> model = new HashMap<>();
         try {
-            log.info("signin start:: " + data.getUsername());
+            log.info("signin start:: " + data.getUserName());
 
-            // boolean isUserValid = userService.isUserExists(new User(data.getUsername(),
+            // boolean isUserValid = userService.isUserExists(new User(data.getUserName(),
             // data.getPassword()));
 
             // if (isUserValid) {
             // Generate JWT token
-            String token = jwtTokenProvider.createToken(data.getUsername());
+            String token = jwtTokenProvider.createToken(data.getUserName());
             model.put("success", true);
             model.put("message", "Authentication successful");
             model.put("token", token);

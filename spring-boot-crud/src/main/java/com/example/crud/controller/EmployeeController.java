@@ -19,11 +19,8 @@ import com.example.crud.model.Employee;
 import com.example.crud.service.EmployeeService;
 import org.springframework.http.MediaType;
 
-import lombok.extern.slf4j.Slf4j;
-
 @RestController
 @RequestMapping("/employee")
-@Slf4j
 public class EmployeeController {
 
     @Autowired
@@ -37,14 +34,12 @@ public class EmployeeController {
     @GetMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployees(@RequestParam("order") Optional<String> order,
             @RequestParam("orderBy") Optional<String> orderBy) {
-        // return userService.getAllUser(orderBy.get(), order.get());
         return employeeService.getAllEmployee("", "");
     }
 
     @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public Integer createEmployee(@RequestBody Employee employee, Principal principal) {
         if (employee != null && !employee.getName().isEmpty()) {
-            // userService.createtUser(user, principal.getName());
             employeeService.createEmployee(employee);
             return employeeService.getLatestEmployeeId();
         }
@@ -55,15 +50,12 @@ public class EmployeeController {
     public Integer updateEmployee(@PathVariable Integer id,
             @RequestBody Employee employee, Principal principal) {
         employee.setId(id);
-        // userService.updateUser(discrepancyRemarks, principal.getName());
         employeeService.updateEmployee(employee);
         return id;
     }
 
     @DeleteMapping(value = "/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void deleteEmployee(@PathVariable Integer id, Principal principal) {
-        // userService.deleteDiscrepancyRemarksById(id);
-        // userService.deleteUser(id, principal.getName());
         employeeService.deleteEmployee(id);
     }
 
