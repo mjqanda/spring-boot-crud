@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+	<changeSet id="init_user_table" author="merbs">
+		<validCheckSum>1:any</validCheckSum>
+		<createTable tableName="USER_TABLE">
+			<column name="ID" type="SERIAL">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="USERNAME" type="varchar(30)" />
+			<column name="PASSWORD" type="varchar(30)" />
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
