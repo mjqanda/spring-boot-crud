@@ -29,8 +29,8 @@ public class WebSecurityConfig {
                                                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
                                 .authorizeHttpRequests(authConfig -> authConfig
                                                 .requestMatchers("/signin").permitAll()
-                                                .requestMatchers("/employee").permitAll()
-                                                .requestMatchers("/employee/employees").permitAll()
+                                                // .requestMatchers("/employee").permitAll()
+                                                // .requestMatchers("/employee/employees").permitAll()
                                                 .anyRequest().authenticated())
                                 .addFilterBefore(new JwtTokenAuthenticationFilter(tokenProvider),
                                                 UsernamePasswordAuthenticationFilter.class)
