@@ -1,19 +1,18 @@
 package com.example.crud.util;
 
-import java.util.Map;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public class ResponseWrapper {
+    
     private boolean success;
     private String message;
-    private Map<String, Object> data;
+    private String token;
 
-    public ResponseWrapper(boolean success, String message) {
+    public ResponseWrapper(boolean success, String message, String token) {
         this.success = success;
         this.message = message;
+        this.token = token;
     }
 }

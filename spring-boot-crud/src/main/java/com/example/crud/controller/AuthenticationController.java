@@ -32,22 +32,20 @@ public class AuthenticationController {
         try {
             log.info("Signin attempt for username: {}", data.getUsername());
 
-            // boolean isUserValid = userService.isUserExists(new User(data.getUsername(), data.getPassword()));
+            boolean isUserValid = userService.isUserExists(new User(data.getUsername(), data.getPassword()));
 
-            // if (isUserValid) {
+            if (isUserValid) {
                 String token = jwtTokenProvider.createToken(data.getUsername());
-                Map<String, Object> response = new HashMap<>();
-                response.put("token", token);
-
                 log.info("Authentication successful for username: {}", data.getUsername());
-                return ResponseEntity.ok(new ResponseWrapper(true, "Authentication successful", response));
-            // } else {
-            //     log.warn("Authentication failed for username: {}", data.getUsername());
-            //     return ResponseEntity.ok(new ResponseWrapper(false, "Invalid username or password"));
-            // }
+                return ResponseEntity.ok(new ResponseWrapper(true, "Authentication successful", token));
+            } else {
+                log.warn("Authentication failed for username: {}", data.getUsername());
+                return ResponseEntity.ok(new ResponseWrapper(false, "Invalid username or password", null));
+            }
         } catch (Exception e) {
             log.error("Error during authentication for username: {}", data.getUsername(), e);
-            return ResponseEntity.status(500).body(new ResponseWrapper(false, "An error occurred during authentication"));
+            return ResponseEntity.status(500)
+                    .body(new ResponseWrapper(false, "An error occurred during authentication", null));
         }
     }
 
