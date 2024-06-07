@@ -1,6 +1,5 @@
 package com.example.crud.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

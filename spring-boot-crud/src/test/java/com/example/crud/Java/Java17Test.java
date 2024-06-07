@@ -54,7 +54,7 @@ class Java17Test {
     void recordTest() {
         record Person(String name, int age) {
         }
-        record Bldg(){}
+
         Person person = new Person("Alice", 30);
         System.out.println(person);
         assertEquals("Alice", person.name());
