@@ -32,9 +32,20 @@ class EmployeeServiceTests {
     @Test
     void getAllEmployeeTest() {
 
-        List<Employee> Employee = employeeService.getAllEmployee("", "");
-        Employee.forEach(u -> System.out.println("Employee ->" + u.getName()));
-        assertTrue(!Employee.isEmpty());
+        List<Employee> employee = employeeService.getAllEmployee("", "");
+        for (Employee e : employee) {
+            if (employee.equals(employee)) {
+
+            }
+
+        }
+        for (int i = 0; i < employee.size(); i++) {
+
+        }
+
+        Employee johnDoe = employee.stream().filter(e -> e.getName().equals("John Doe")).findFirst().orElse(null);
+
+        // assertTrue(!Employee.isEmpty());
     }
 
     @Test

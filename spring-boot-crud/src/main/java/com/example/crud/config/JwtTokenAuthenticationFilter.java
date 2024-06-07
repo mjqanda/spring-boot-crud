@@ -29,7 +29,7 @@ public class JwtTokenAuthenticationFilter extends GenericFilterBean {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @Override
+    @Override //filter main method. Intercepts incoming HTTP requests and processes the JWT token.
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
         log.info("token filter start::");
