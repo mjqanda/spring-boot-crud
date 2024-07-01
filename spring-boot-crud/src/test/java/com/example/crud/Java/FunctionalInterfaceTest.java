@@ -60,4 +60,5 @@ public class FunctionalInterfaceTest {
     interface Condition<T> {
         boolean test(T t);
     }
+
 }

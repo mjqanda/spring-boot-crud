@@ -78,13 +78,23 @@ class Java17Test {
     @Test
     void textBlockTest() {
         String textBlock = """
-                This is a text block.
-                It spans multiple lines.
-                It's very convenient for multiline strings.
+                multiline text block
+                multiline text block
+                multiline text block
+                multiline text block
+                multiline text block
                 """;
 
         System.out.println(textBlock);
         assertTrue(textBlock.contains("multiline"));
+    }
+
+    @Test
+    void instanceOfTest(){
+        Object obj = "Hello World";
+        if (obj instanceof String s){
+            System.out.println(s.toUpperCase());
+        }
     }
 
     enum Day {
