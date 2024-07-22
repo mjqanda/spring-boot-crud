@@ -7,20 +7,24 @@ import com.example.crud.model.ShoppingCart;
 
 public class ShoppingCartService {
 
-    List<Item> cart1 = ShoppingCart.getInstance();
+    List<Item> cart = ShoppingCart.getInstance();
 
     void addShoppingCartItem(Item item) {
-        cart1.add(item);
+        cart.add(item);
     }
 
-    double computeTotal() {
-        double totalDouble = 0;
-        for (Item cart : cart1) {
-            int qty = cart.getQty();
-            double price = cart.getPrice();
-            int totalItemPrice = (double) qty+ price;
-            totalDouble =+totalItemPrice
-        }
+    int computeTotalQty() {
+        int totalQty = cart.stream()
+                .map(Item::getQty)
+                .reduce(0, Integer::sum);
+        return totalQty != 0 ? totalQty : 0;
+    }
+
+    double computeTotalPrice() {
+        double totalPrice = cart.stream()
+                .map(Item::getPrice)
+                .reduce(0.0, Double::sum);
+        return totalPrice != 0.0 ? totalPrice : 0.0;
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.crud.Java;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +13,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
+
+import com.example.crud.model.Item;
 
 class JavaStreamTest {
 
@@ -62,6 +65,26 @@ class JavaStreamTest {
                 .reduce(0, Integer::sum);
         System.out.println("Sum: " + sum);
         assertEquals(15, sum);
+
+        List<Item> items = Arrays.asList(
+                new Item("Item1", 10, 9.99),
+                new Item("Item2", 5, 19.99),
+                new Item("Item3", 15, 29.99));
+
+        // Calculate the total quantity using reduce
+        int totalQty = items.stream()
+                .map(Item::getQty)
+                .reduce(0, Integer::sum);
+
+        // Calculate the total price using reduce
+        double totalPrice = items.stream()
+                .map(Item::getPrice)
+                .reduce(0.0, Double::sum);
+
+        // Print the results
+        System.out.println("Total Quantity: " + totalQty);
+        System.out.println("Total Price: " + totalPrice);
+
     }
 
     @Test
@@ -91,6 +114,9 @@ class JavaStreamTest {
                 .limit(3)
                 .collect(Collectors.toList());
         limited.forEach(System.out::println);
+
+        // String str = strings.stream().filter()
+        // String str = strings.get(1);
         assertEquals(Arrays.asList("one", "two", "three"), limited);
     }
 
